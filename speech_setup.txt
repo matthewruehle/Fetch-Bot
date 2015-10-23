@@ -1,6 +1,10 @@
-install flac via commandline:
+1. install flac via commandline:
 $	sudo apt-get install flac
 
-install PyAudio (for microphone support) and speechRecognition (self-explanatory):
+2. install PyAudio (for microphone support) and SpeechRecognition (self-explanatory):
 $	sudo apt-get install python-pyaudio python3-pyaudio 
-$
+$	sudo pip install SpeechRecognition
+
+3. add user to audio group (TODO: figure out cleaner way to do this, e.g. with JACK, b/c adding a specific user to the audio group is apparently sketch.)
+
+4. par-tay. also do other stuff probably.
