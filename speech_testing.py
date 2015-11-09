@@ -1,5 +1,5 @@
 import speech_recognition as sr
-import rospy
+# import rospy
 # import threading
 import time
 
@@ -53,9 +53,9 @@ i = 0
 # 	if rospy.Time.now() - start_time > 60:
 # 		break
 
-while i<6000:
-	rospy.sleep(.01)
-
+while True:
+	pass
+	
 print "DONE"
 
 # for i = 1:1:N
