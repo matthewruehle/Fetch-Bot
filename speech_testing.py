@@ -1,4 +1,5 @@
 import speech_recognition as sr
+import rospy
 # import threading
 import time
 
@@ -20,7 +21,6 @@ r = sr.Recognizer()
 # 	print "couldn't request from google: ", e
 
 def callback(recognizer, audio):
-
 	try:
 		this_string = recognizer.recognize_google(audio)
 	except sr.UnknownValueError:
@@ -30,6 +30,7 @@ def callback(recognizer, audio):
 		print "Couldn't request results"
 		return
 	word_list = this_string.split(' ')
+	print word_list
 
 print "MIC-ing"
 m = sr.Microphone()
@@ -45,13 +46,17 @@ stop_listening = r.listen_in_background(m, callback)
 
 i = 0
 
-while i<5000:
-	i += 1
-	time.sleep(.01)
+# rospy.init_node("fetchBot")
+# start_time = rospy.Time.now()
+
+# while not rospy.is_shutdown():
+# 	if rospy.Time.now() - start_time > 60:
+# 		break
+
+while i<6000:
+	rospy.sleep(.01)
 
 print "DONE"
-
-
 
 # for i = 1:1:N
 # 	while asdfasdf

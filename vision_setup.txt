@@ -9,6 +9,7 @@ $ sudo rpi-update
 $ sudo raspi-config
 
 2. Install the raspberry pi's official camera modules.
+$ pip install "picamera[array]"
 
 2. Install openCV (in a workspace), per instructions at:
 http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/
