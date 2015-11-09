@@ -39,6 +39,7 @@ class QRDetector(object):
 		Looks through camera once; if there's a QR code, returns it. Otherwise, returns -1.
 		"""
 		self.cam.capture(self.stream, format="jpeg")
+		self.stream.truncate()
 		self.stream.seek(0)
 		img = Image.open(self.stream)
 		img.load()
@@ -46,8 +47,14 @@ class QRDetector(object):
 		img.close()
 		raw = grayscale_img.tobytes()
 		width, height = grayscale_img.size
-		code_detected = zbarlight.qr_code_scanner(raw, width, height)
-		print "QR: ", code_detected.decode()
+		scan_results = zbarlight.qr_code_scanner(raw, width, height)
+		try: 
+			code = scan_results.decode()
+			print "QR: ", code
+			return code
+		except:
+			print "No QR detected"
+			return -1
 
 if __name__ == "__main__":
 	qrd = QRDetector()
