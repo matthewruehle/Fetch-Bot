@@ -51,6 +51,6 @@ class QRDetector(object):
 
 if __name__ == "__main__":
 	qrd = QRDetector()
-	for i in range(10):
-		time.sleep(2)
+	for i in range(20):
+		time.sleep(.5)
 		qrd.run_once()
