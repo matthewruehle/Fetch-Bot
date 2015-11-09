@@ -1,0 +1,20 @@
+[0. If the traditional apt-get upgrade, update, etc. methods hang, it's likely because of an issue contacting the mirror server for Raspbian. Manually changing the sources in /etc/apt/sources.list from mirror-directory.raspbian.org (or w/e) to a specific mirror will make downloads slow, but they'll work.]
+$ cd /etc/apt
+$ nano sources.list
+[make changes]
+$ sudo apt-get update
+
+1. Run rpi-update, and enable the camera in the rpi settings.
+$ sudo rpi-update
+$ sudo raspi-config
+
+2. Install the raspberry pi's official camera modules.
+
+2. Install openCV (in a workspace), per instructions at:
+http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/
+
+3. Install zbar, and the zbarlight python wrapper:
+$ sudo apt-get install libzbar0 libzbar-dev
+$ workon [workspace]
+$ pip install zbarlight
+
