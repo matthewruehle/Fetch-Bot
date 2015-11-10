@@ -9,7 +9,7 @@ import io
 import picamera
 # import cv2
 import zbarlight
-# import time
+import time
 
 class QRDetector(object):
 	"""
