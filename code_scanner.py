@@ -5,11 +5,11 @@ Note: This is a work in progress, -m@.
 
 from PIL import Image
 import io
-from picamera.array import PiRGBArray
+# from picamera.array import PiRGBArray
 import picamera
-import cv2
+# import cv2
 import zbarlight
-import time
+# import time
 
 class QRDetector(object):
 	"""
@@ -58,6 +58,4 @@ class QRDetector(object):
 
 if __name__ == "__main__":
 	qrd = QRDetector()
-	for i in range(20):
-		time.sleep(.5)
-		qrd.run_once()
+	qrd.run_once()
