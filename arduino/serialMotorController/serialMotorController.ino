@@ -111,6 +111,7 @@ void loop() {
 
 void findLineLeft() {
   left_sensor = analogRead(LEFT_SENSOR_PIN);
+  Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
 
   if (!foundLine) {
     if (left_sensor < LEFT_SENSOR_THRESH) {
@@ -129,6 +130,7 @@ void findLineLeft() {
 
 void findLineRight() {
   right_sensor = analogRead(RIGHT_SENSOR_PIN);
+  Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
 
   if (!foundLine) {
     if (right_sensor < RIGHT_SENSOR_PIN) {
@@ -148,6 +150,8 @@ void findLineRight() {
 void followLine() {
   left_sensor = analogRead(LEFT_SENSOR_PIN);
   right_sensor = analogRead(RIGHT_SENSOR_PIN);
+  Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
+  Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
 
   if (left_sensor > LEFT_SENSOR_THRESH) {
     //Left sensor is over line
