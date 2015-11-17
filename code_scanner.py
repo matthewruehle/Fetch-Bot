@@ -28,8 +28,7 @@ class QRDetector(object):
 		Looks through camera once; if there's a QR code, returns it. Otherwise, returns -1.
 		"""
 		self.cam.capture(self.stream, format="jpeg", use_video_port=True)
-		self.stream.truncate()
-		# self.stream.seek(0)
+		self.stream.seek(0)
 		img = Image.open(self.stream)
 		img.load()
 		grayscale_img = img.convert('L')
@@ -44,10 +43,11 @@ class QRDetector(object):
 		except:
 			print "No QR detected"
 			return -1
-		self.stream = io.BytesIO()
+		self.stream.truncate(0)
+
 
 if __name__ == "__main__":
 	qrd = QRDetector()
 	for i in range(20):
 		qrd.run_once()
-		time.sleep(1)
+		time.sleep(5)
