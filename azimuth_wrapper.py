@@ -4,6 +4,7 @@ right now, just keeps track of last-known-location; has the bot stop when it get
 import serial
 import qr_detector
 import collections
+import speech_testing #needs to be set up correctly
 
 class FetchBot(object):
 
@@ -12,7 +13,11 @@ class FetchBot(object):
 		self.ser = serial.Serial(serial_port, 9600, timeout=2)
 		self.target_queue = [1,3,2,4]
 		self.hasObject = False
-
+		recognizedCommands = [salt, pepper, one, two, three]
+		if speechTester.word_list in reconizedCommands:
+			self.set_target(speechTester.word_list) #needs to be changed once speech_testing is set up like a class
+		else:
+			print "Unrecognized Command"
 	def check_if_at_target(self):
 		if len(self.target_queue) == 0:
 			return
@@ -31,8 +36,10 @@ class FetchBot(object):
 		self.check_if_at_target()
 
 	def do_something(self):
-		pass
-
+		PICKUP_COMMAND = "G" #sets the command to pickup the object
+		ser.write(PICKUP_COMMAND)
+		return
+	
 	def set_target(self, new_target):
 		self.target_queue.extend(new_target)
 
