@@ -24,8 +24,8 @@ class FetchBot(object):
 			self.target_queue.pop(0)
 
 	def stop_robot(self):
-		STOP_COMMAND = "asdfadf"
-		ser.write(STOP_COMMAND) # replace ofc.
+		STOP_COMMAND = "S"
+		ser.write(STOP_COMMAND)
 
 	def mainloop(self):
 		self.check_if_at_target()
@@ -39,3 +39,5 @@ class FetchBot(object):
 	def flush_targets(self):
 		self.target_queue = []
 
+if __name__ == "__main__":
+	FetchBot.mainloop()
