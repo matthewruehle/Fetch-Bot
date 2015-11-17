@@ -19,31 +19,35 @@ class QRDetector(object):
 		self.cam.resolution = (640, 480) # reducing resolution with the onboard GPU, to speed calculation elsewhere.
 		self.cam.framerate = 32
 		time.sleep(1) # "warm-up" time for the camera.
-		# self.stream = PiRGBArray(self.cam)
-		self.stream = io.BytesIO()
 
 
 	def run_once(self):
 		"""
 		Looks through camera once; if there's a QR code, returns it. Otherwise, returns -1.
 		"""
-		self.cam.capture(self.stream, format="jpeg", use_video_port=True)
-		self.stream.seek(0)
-		img = Image.open(self.stream)
-		img.load()
-		grayscale_img = img.convert('L')
-		img.close()
-		raw = grayscale_img.tobytes()
-		width, height = grayscale_img.size
-		scan_results = zbarlight.qr_code_scanner(raw, width, height)
-		try: 
-			code = scan_results.decode()
-			print "QR: ", code
-			return code
-		except:
-			print "No QR detected"
-			return -1
-		self.stream.truncate(0)
+		with self.cam as camera:
+			stream = io.BytesIO()
+			for i in camera.capture_continuous(stream, format="jpeg", use_video_port=True):
+				stream.truncate()
+				stream.seek(0)
+				img = Image.open(stream)
+				img.load()
+				grayscale_img = img.convert('L')
+				img.close()
+				raw = grayscale_img.tobytes()
+				width, height = grayscale_img.size
+				scan_results = zbarlight.qr_code_scanner(raw, width, height)
+				try: 
+					code = scan_results.decode()
+					print "QR: ", code
+					print "Truncating now"
+					stream.truncate(0)
+					return code
+				except:
+					print "No QR detected"
+					stream.truncate(0)
+					print "truncating"
+					return -1
 
 
 if __name__ == "__main__":
