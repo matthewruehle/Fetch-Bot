@@ -38,18 +38,18 @@ class QRDetector(object):
 		try: 
 			code = scan_results.decode()
 			print "QR: ", code
-			print "Truncating now"
+			# print "Truncating now"
 			stream.truncate(0)
 			return code
 		except:
-			print "No QR detected"
+			print "QR: N/A"
 			stream.truncate(0)
-			print "truncating"
+			# print "truncating"
 			return -1
 
 
 if __name__ == "__main__":
 	qrd = QRDetector()
-	for i in range(20):
+	for i in range(300):
 		qrd.run_once()
-		time.sleep(1)
+		time.sleep(.1)
