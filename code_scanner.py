@@ -4,54 +4,8 @@ Note: This is a work in progress, -m@.
 """
 from PIL import Image
 import io
-# from picamera.array import PiRGBArray
 import picamera
-# import cv2
 
-
-# import fileinput
-# import math
-
-# def specific_permutation(m, n):
-#     '''gets mth and nth permutation fron an input'''
-#     total_number_of_options = math.factorial(n);
-#     current_possible_integers = [i for i in range(n)]
-#     output_list = []
-#     for i in range(n):
-#         f = math.factorial(n - (i+1))
-#         print m, f
-#         which_tile = m / f
-#         print which_tile, current_possible_integers[which_tile-1]
-#         output_list.append(current_possible_integers[which_tile-1])
-#         current_possible_integers.pop(which_tile)
-#         m = m%f
-#     for i in output_list:
-#         print output_list[i], ' ',
-#     print '\n'       
-        
-        
-# if __name__ == "__main__":
-#     # for line in fileinput.input():
-#     #     two_strings = line.split(' ')
-#     #     m = int(two_strings[0])
-#     #     n = int(two_strings[1])
-#     m = 719
-#     n = 6
-#     specific_permutation(m, n)
-        
-
-
-
-
-
-
-
-
-
-
-
-# '''
-# #=============================
 import zbarlight
 import time
 
@@ -69,14 +23,6 @@ class QRDetector(object):
 		# self.stream = PiRGBArray(self.cam)
 		self.stream = io.BytesIO()
 
-	def run_continuous(self):
-		if True:
-			return # don't use this function right now! just testing.
-		for i in self.cam.capture_continuous(self.stream):
-			self.stream.truncate()
-			self.stream.seek(0) # gets image
-
-			# converts to a PIL image for processing
 
 	def run_once(self):
 		"""
@@ -99,6 +45,7 @@ class QRDetector(object):
 		except:
 			print "No QR detected"
 			return -1
+		self.stream = io.BytesIO()
 
 if __name__ == "__main__":
 	qrd = QRDetector()
