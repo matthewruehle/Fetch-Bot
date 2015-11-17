@@ -13,7 +13,7 @@ class FetchBot(object):
 		self.ser = serial.Serial(serial_port, 9600, timeout=2)
 		self.target_queue = [1,3,2,4]
 		self.hasObject = False
-		recognizedCommands = [salt, pepper, one, two, three]
+		recognizedCommands = ["salt", "pepper", "one", "two", "three"]
 		if speechTester.word_list in reconizedCommands:
 			self.set_target(speechTester.word_list) #needs to be changed once speech_testing is set up like a class
 		else:
@@ -27,7 +27,10 @@ class FetchBot(object):
 			self.stop_robot()
 			self.do_something()
 			self.target_queue.pop(0)
-
+	def grab(self):
+		GRAB_COMMAND = "G"
+		ser.write(GRAB_COMMAND)
+		
 	def stop_robot(self):
 		STOP_COMMAND = "S"
 		ser.write(STOP_COMMAND)
@@ -36,8 +39,8 @@ class FetchBot(object):
 		self.check_if_at_target()
 
 	def do_something(self):
-		PICKUP_COMMAND = "G" #sets the command to pickup the object
-		ser.write(PICKUP_COMMAND)
+		TURN_COMMAND = "<" #sets the command to pickup the object
+		ser.write(TURN_COMMAND)
 		return
 	
 	def set_target(self, new_target):
