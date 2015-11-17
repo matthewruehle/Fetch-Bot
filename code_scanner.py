@@ -27,7 +27,7 @@ class QRDetector(object):
 		"""
 		with self.cam as camera:
 			stream = io.BytesIO()
-			camera.capture(stream, format="jpeg", use_video_port=True):
+			camera.capture(stream, format="jpeg", use_video_port=True)
 			stream.truncate()
 			stream.seek(0)
 			img = Image.open(stream)
@@ -45,7 +45,7 @@ class QRDetector(object):
 				return code
 			except:
 				print "No QR detected"
-				self.stream.truncate(0)
+				stream.truncate(0)
 				print "truncating"
 				return -1
 
