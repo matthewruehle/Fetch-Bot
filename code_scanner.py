@@ -52,4 +52,4 @@ if __name__ == "__main__":
 	qrd = QRDetector()
 	for i in range(20):
 		qrd.run_once()
-		time.sleep(5)
+		time.sleep(1)
