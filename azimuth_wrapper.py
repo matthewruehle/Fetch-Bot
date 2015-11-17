@@ -33,9 +33,12 @@ class FetchBot(object):
 		STOP_COMMAND = "S"
 		ser.write(STOP_COMMAND)
 
-	def mainloop(self):
-		if speechTester.word_list in self.reconizedCommands: #needs to be changed to whatever is actually the call for word list
+	def mainloop(self): #First checks the list of found voice commands and compares them to what it has heard. If there is a match and it isn't "azimuth", it appends the command list. If it is "azimuth" it recognizes its own name. Else, it returns a false command
+		if speechTester.word_list in self.reconizedCommands and "azimuth" not in speechTester.word_list: #needs to be changed to whatever is actually the call for word list
 			self.set_target(speechTester.word_list) #needs to be changed once speech_testing is set up like a class
+		elif "azimuth" in speechTester.word_list:
+			print "recognized name"
+			pass
 		else:
 			print "Unrecognized Command"
 		self.check_if_at_target()
