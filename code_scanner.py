@@ -18,7 +18,6 @@ class QRDetector(object):
 		self.cam = picamera.PiCamera()
 		self.cam.resolution = (640, 480) # reducing resolution with the onboard GPU, to speed calculation elsewhere.
 		self.cam.framerate = 32
-		self.cam.start_preview()
 		time.sleep(1) # "warm-up" time for the camera.
 		# self.stream = PiRGBArray(self.cam)
 		self.stream = io.BytesIO()
@@ -30,7 +29,7 @@ class QRDetector(object):
 		"""
 		self.cam.capture(self.stream, format="jpeg", use_video_port=True)
 		self.stream.truncate()
-		self.stream.seek(0)
+		# self.stream.seek(0)
 		img = Image.open(self.stream)
 		img.load()
 		grayscale_img = img.convert('L')
@@ -49,5 +48,6 @@ class QRDetector(object):
 
 if __name__ == "__main__":
 	qrd = QRDetector()
-	
-	qrd.run_once()
+	for i in range(20):
+		qrd.run_once()
+		time.sleep(1)
