@@ -21,7 +21,7 @@ class QRDetector(object):
 		time.sleep(1) # "warm-up" time for the camera.
 
 
-	def run_once(self):
+	def scan(self):
 		"""
 		Looks through camera once; if there's a QR code, returns it. Otherwise, returns -1.
 		"""
