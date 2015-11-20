@@ -9,10 +9,11 @@ Adafruit_DCMotor *leftm, *rightm;
 const byte LEFT_MOTOR_PORT = 1;
 const byte RIGHT_MOTOR_PORT = 2;
 const int LEFT_SENSOR_PIN = A5, RIGHT_SENSOR_PIN = A3;
-const int LEFT_SENSOR_THRESH = 800;
-const int RIGHT_SENSOR_THRESH = 800;
+const int LEFT_SENSOR_THRESH = 890;
+const int RIGHT_SENSOR_THRESH = 700;
 const int LEFT_HALL_A_PIN = 1, LEFT_HALL_B_PIN = 2;
 const int RIGHT_HALL_A_PIN = 3, RIGHT_HALL_B_PIN = 4;
+const int SERVO_PIN = A1;
 int la_prevstate = 0, lb_prevstate = 0, ra_prevstate = 0, rb_prevstate = 0;
 int la_state = 0, lb_state = 0, ra_state = 0, rb_state = 0;
 int left_sensor, right_sensor;
@@ -33,8 +34,8 @@ void setup() {
   rightm = MS.getMotor(RIGHT_MOTOR_PORT);
   leftm -> setSpeed(0);
   rightm -> setSpeed(0);
-  leftm -> run(BACKWARD);
-  rightm -> run(FORWARD);
+  leftm -> run(FORWARD);
+  rightm -> run(BACKWARD);
 }
 
 void loop() {
@@ -98,6 +99,9 @@ void loop() {
     case '>': //Turn right until you find a line
       findLineRight();
       break;
+
+    case 'G': //Grab
+      break;
       
     default:
       //change nothing
@@ -111,18 +115,19 @@ void loop() {
 
 void findLineLeft() {
   left_sensor = analogRead(LEFT_SENSOR_PIN);
-  Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
+  //Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
 
   if (!foundLine) {
     if (left_sensor < LEFT_SENSOR_THRESH) {
-      drive(-20, 20);
+      drive(-15, 15);
     } else {
       foundLine = true;
     }
   } else {
     if (left_sensor > LEFT_SENSOR_THRESH) {
-      drive(-20, 20);
+      drive(-15, 15);
     } else {
+      delay(500);
       drive(0, 0);
     }
   }
@@ -130,18 +135,19 @@ void findLineLeft() {
 
 void findLineRight() {
   right_sensor = analogRead(RIGHT_SENSOR_PIN);
-  Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
+  //Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
 
   if (!foundLine) {
-    if (right_sensor < RIGHT_SENSOR_PIN) {
-      drive(-20, 20);
+    if (right_sensor < RIGHT_SENSOR_THRESH) {
+      drive(15, -15);
     } else {
       foundLine = true;
     }
   } else {
-    if (right_sensor > RIGHT_SENSOR_PIN) {
-      drive(-20, 20);
+    if (right_sensor > RIGHT_SENSOR_THRESH) {
+      drive(15, -15);
     } else {
+      delay(500);
       drive(0, 0);
     }
   }
@@ -150,27 +156,40 @@ void findLineRight() {
 void followLine() {
   left_sensor = analogRead(LEFT_SENSOR_PIN);
   right_sensor = analogRead(RIGHT_SENSOR_PIN);
-  Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
-  Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
-
+  //Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
+  //Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
+  
   if (left_sensor > LEFT_SENSOR_THRESH) {
     //Left sensor is over line
     //Swerve left until left sensor is not over line
-    drive(40, 50); //Slow down left wheel to swerve left
+    drive(10, 30); //Slow down left wheel to swerve left
   } else if (right_sensor > RIGHT_SENSOR_THRESH) {
     //Right sensor is over line
     //Swerve right until right sensor is not over line
-    drive(50, 40); //Slow down right wheel to swerve right
+    drive(30, 10); //Slow down right wheel to swerve right
   } else {
     //No sensors are over line
     //Drive straight
-    drive(50, 50);
+    drive(30, 30);
   }
 }
 
 void drive(int l, int r) { // helper function to drive motors
-  leftm -> setSpeed(l);
-  rightm -> setSpeed(r);
+  if (l<0) {
+    leftm -> run(BACKWARD);
+    leftm -> setSpeed(-1*l);
+  } else {
+    leftm -> run(FORWARD);
+    leftm -> setSpeed(l);
+  }
+
+  if (r<0) {
+    rightm -> run(FORWARD);
+    rightm -> setSpeed(-1*r);
+  } else {
+    rightm -> run(BACKWARD);
+    rightm -> setSpeed(r);
+  }
 }
 
 void resetDriveParams() {
