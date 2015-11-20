@@ -11,3 +11,4 @@ Monitors serial communications for motor commands, passes motor commands to DC m
 | F       |           | Attempt to run line-following algorithm               |
 | <       |           | Turn left until a line is found                       |
 | >       |           | Turn right until a line is found                      |
+| G       |           | Actuate the grabber servos to grab object             |
