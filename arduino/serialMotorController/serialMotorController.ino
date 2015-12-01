@@ -1,9 +1,12 @@
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
+#include <Servo.h>
 #define FORWARD 1
 #define BACKWARD 2
 #define RELEASE 3
 
+Servo manip_servo;
+Servo claw_servo;
 Adafruit_MotorShield MS;
 Adafruit_DCMotor *leftm, *rightm;
 const byte LEFT_MOTOR_PORT = 1;
@@ -13,7 +16,8 @@ const int LEFT_SENSOR_THRESH = 890;
 const int RIGHT_SENSOR_THRESH = 700;
 const int LEFT_HALL_A_PIN = 1, LEFT_HALL_B_PIN = 2;
 const int RIGHT_HALL_A_PIN = 3, RIGHT_HALL_B_PIN = 4;
-const int SERVO_PIN = A1;
+const int MANIPULATOR_SERVO_PIN = 9;
+const int CLAW_SERVO_PIN = 10;
 int la_prevstate = 0, lb_prevstate = 0, ra_prevstate = 0, rb_prevstate = 0;
 int la_state = 0, lb_state = 0, ra_state = 0, rb_state = 0;
 int left_sensor, right_sensor;
@@ -36,6 +40,10 @@ void setup() {
   rightm -> setSpeed(0);
   leftm -> run(FORWARD);
   rightm -> run(BACKWARD);
+  manip_servo.attach(MANIPULATOR_SERVO_PIN);
+  claw_servo.attach(CLAW_SERVO_PIN);
+  manip_servo.write(180);
+  claw_servo.write(90);
 }
 
 void loop() {
@@ -101,6 +109,7 @@ void loop() {
       break;
 
     case 'G': //Grab
+      grab();
       break;
       
     default:
@@ -151,6 +160,19 @@ void findLineRight() {
       drive(0, 0);
     }
   }
+}
+
+void grab() {
+  drive(0, 0);
+  manip_servo.write(130);
+  claw_servo.write(70);
+  delay(1000);
+  claw_servo.write(120);
+  delay(800);
+  claw_servo.write(90);
+  manip_servo.write(180);
+  delay(1200);
+  command = 'S';
 }
 
 void followLine() {
