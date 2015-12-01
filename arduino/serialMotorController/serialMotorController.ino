@@ -111,7 +111,11 @@ void loop() {
     case 'G': //Grab
       grab();
       break;
-      
+
+    case 'D': //Drop
+      drop();
+      break;
+        
     default:
       //change nothing
       if (unknownCommandFlag) {
@@ -172,6 +176,16 @@ void grab() {
   claw_servo.write(90);
   manip_servo.write(180);
   delay(1200);
+  command = 'S';
+}
+
+void drop() {
+  drive(0, 0);
+  claw_servo.write(70);
+  delay(1000);
+  claw_servo.write(120);
+  delay(1000);
+  claw_servo.write(90);
   command = 'S';
 }
 

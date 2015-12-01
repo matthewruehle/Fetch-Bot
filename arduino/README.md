@@ -12,3 +12,4 @@ Monitors serial communications for motor commands, passes motor commands to DC m
 | <       |           | Turn left until a line is found                       |
 | >       |           | Turn right until a line is found                      |
 | G       |           | Actuate the grabber servos to grab object             |
+| D       |           | Open the grabber claws and then close them            |
