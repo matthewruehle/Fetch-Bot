@@ -25,7 +25,7 @@ class FetchBot(object):
 		qr_val = self.qrd.scan()
 		if str(qr_val) == str(self.target_queue[0]):
 			t = self.target_queue[0]
-			print "arrived at ", t
+			print "arrived at ", t, "|\t", target_queue
 			if t in ["1", "2", "3"]:
 				if self.hasObject:
 					DROP_COMMAND = "D" # TODO ofc.
