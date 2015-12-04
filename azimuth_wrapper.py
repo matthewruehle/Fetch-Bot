@@ -1,12 +1,9 @@
 """
-right now, just keeps track of last-known-location; has the bot stop when it gets there.
-
 TODO: probably, add some try-catches.
-
 """
 import serial
 import qr_detector
-# import speech_handler #needs to be set up correctly
+import speech_handler #needs to be set up correctly
 
 class FetchBot(object):
 
@@ -17,7 +14,7 @@ class FetchBot(object):
 		self.target_queue = ["1", "salt", "2", "pepper", "3"] # setting at start, for testing purposes.
 		self.hasObject = False
 		self.words_to_targets_dict = {"one": "1", "1": "1", "2":"2", "3":"3", "two": "2", "three": "3", "salt": "salt", "pepper": "pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
-		# self.sr = speech_handler.Speech_handler(self.set_target)
+		self.sr = speech_handler.Speech_handler(self.set_target)
 
 	def check_if_at_target(self):
 		if len(self.target_queue) == 0:
