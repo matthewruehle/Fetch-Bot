@@ -29,6 +29,7 @@ int actual_speed;
 boolean argParse = false;
 boolean foundLine = false;
 boolean unknownCommandFlag = false;
+int cs = 90;
 
 void setup() {
   Serial.begin(9600);
@@ -168,12 +169,13 @@ void findLineRight() {
 
 void grab() {
   drive(0, 0);
-  manip_servo.write(130);
   claw_servo.write(70);
-  delay(1000);
+  delay(500);
+  manip_servo.write(40);
+  delay(2000);
   claw_servo.write(120);
   delay(800);
-  claw_servo.write(90);
+  //claw_servo.write(90);
   manip_servo.write(180);
   delay(1200);
   command = 'S';
@@ -181,11 +183,15 @@ void grab() {
 
 void drop() {
   drive(0, 0);
-  claw_servo.write(70);
+  manip_servo.write(40);
+  delay(500);
+  claw_servo.write(60);
+  delay(500);
+  manip_servo.write(180);
   delay(1000);
-  claw_servo.write(120);
-  delay(1000);
-  claw_servo.write(90);
+  claw_servo.write(100);
+  //delay(1000);
+  //claw_servo.write(90);
   command = 'S';
 }
 
@@ -270,4 +276,3 @@ void accumulateEncoder_Right_B() {
     rb_prevstate = rb_state;
   }
 }
-
