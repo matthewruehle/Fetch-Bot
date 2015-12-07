@@ -10,7 +10,7 @@ class Speech_handler(object):
 		print "Speech_handler starting..."
 		self.r = sr.Recognizer()
 		print "Setting up microphone..."
-		self.m = sr.Microphone(device_index=2, sample_rate=16000)
+		self.m = sr.Microphone(device_index=2, sample_rate=48000)
 		print "Adjusting for ambient noise..."
 		with self.m as source:
 			self.r.adjust_for_ambient_noise(source)
