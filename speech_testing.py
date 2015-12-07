@@ -33,7 +33,7 @@ def callback(recognizer, audio):
 	print word_list
 
 print "MIC-ing"
-m = sr.Microphone(device_index=2, sample_rate=48000)
+m = sr.Microphone(device_index=2, sample_rate=48000, chunk_size = 8192)
 
 with m as source:
 	r.adjust_for_ambient_noise(source)

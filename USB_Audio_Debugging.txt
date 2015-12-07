@@ -1,3 +1,5 @@
 Follow the instructions here to determine the min/max audio rate settings; for this USB mic, min = 44100Hz, max=48000Hz.
 http://www.voxforge.org/home/docs/faq/faq/linux-how-to-determine-your-audio-cards-or-usb-mics-maximum-sampling-rate
 
+device_index=2, sample_rate=48000, chunk_size = 8192:
+device-dependent.
