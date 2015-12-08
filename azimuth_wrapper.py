@@ -17,8 +17,6 @@ class FetchBot(object):
 		self.hasObject = False
 		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
 		self.sr = speech_handler.Loop_speech_handler(self.set_target)
-		self.main_loops_so_far = 0 # for debugging.
-
 
 	def check_if_at_target(self):
 		if len(self.target_queue) == 0:
@@ -29,7 +27,7 @@ class FetchBot(object):
 		qr_val = self.qrd.scan()
 		if str(qr_val) == str(self.target_queue[0]):
 			t = self.target_queue[0]
-			print "arrived at ", t, "|\t", target_queue
+			print "arrived at ", t, "|\t", self.target_queue
 			if t in ["1", "2", "3"]:
 				if self.hasObject:
 					DROP_COMMAND = "D" # TODO ofc.
@@ -61,14 +59,13 @@ class FetchBot(object):
 			FWD_COMMAND = "F"
 			self.ser.write(FWD_COMMAND)
 			self.target_queue.pop(0)
+		else:
+			self.ser.write("F")
 			
 	def run(self):
 		"""
 		main loop
 		"""
-		self.main_loops_so_far += 1
-		if self.main_loops_so_far%10000 == 0:
-			print "main loop running 10kx" 
 		self.check_if_at_target()
 
 	def set_target(self, new_targets):
@@ -103,6 +100,13 @@ class FetchBot(object):
 				self.sr.once()
 		except KeyboardInterrupt:
 			print "listen_loop terminated"
+		except IOError:
+			self.sr.refresh() #might need to actually recreate the whole handler/recognizer too, not sure.
+			#Not sure if this actually fixes the problem we're getting - persistent, hard-to-figure-out-why IOError keeps showing up occasionally.
+			#Specifically, IOError: stream closed. Refreshing the microphone might reopen the stream?
+			#Maybe find some way to pre-emptively "save" the audio? Not sure if that's possible.
+			#Also, not sure if it's the microphone that's having the problem. Might be the recognizer, or something else.
+			#Googling the error code just gets unrelated IOErrors. Googling it in quotes gets 4 results, none resolved. :|
 
 
 if __name__ == "__main__":
@@ -116,4 +120,5 @@ if __name__ == "__main__":
 			time.sleep(1)
 	except KeyboardInterrupt:
 		time.sleep(1)
+		print "Exiting..."
 		exit()

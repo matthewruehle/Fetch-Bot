@@ -4,11 +4,11 @@ import time
 
 class Background_speech_handler(object):
 	"""
-		This one is ideal, but might not be possible to implement on the RPi hardware.
+	This one is ideal, but might not be possible to implement on the RPi hardware.
 	"""
 	def __init__(self, callback_function):
 		"""
-		needs to receive a callback function.
+		Needs to receive a callback function.
 		"""
 		print "Speech_handler starting..."
 		self.r = sr.Recognizer()
@@ -38,8 +38,7 @@ class Background_speech_handler(object):
 
 class Loop_speech_handler(object):
 	"""
-	This one might hang the processor. You've been warned.
-	TODO: Threading.
+	NOTE: Do not run loop() in the main thread, it will block the program. 
 	"""
 	def __init__(self, callback_function):
 		print "Loop handler starting..."
@@ -54,11 +53,14 @@ class Loop_speech_handler(object):
 			self.r.adjust_for_ambient_noise(source)
 		self.r.pause_threshold = 0.3
 		self.r.non_speaking_duration = 0
-		self.cb = callback_function
+		self.azimuth_callback = callback_function
 
 	def once(self): 
+		"""
+		Runs once, and sends the results to self.azimuth_callback.
+		"""
 		with self.m as source:
-			print "Running once!"
+			print "Listening..."
 			audio = self.r.listen(source)
 		try: 
 			this_string = self.r.recognize_google(audio)
@@ -69,9 +71,17 @@ class Loop_speech_handler(object):
 			print "Couldn't request results..."
 			return
 		word_list = this_string.split(' ')
-		self.cb(word_list)
+		self.azimuth_callback(word_list)
 		return
 
-	def loop(self):
-		self.once()
-		self.loop()
+	def refresh(self):
+		"""
+		Refreshes the microphone, making self.m refer to a new instance of the sr.Microphone class.
+		"""
+		del self.m #might be a superfluous call.
+		self.m = sr.Microphone(
+			# device_index = 2,
+			sample_rate = 44100, 
+			chunk_size = 8192
+			)
+		print "Microphone lease refreshed."
