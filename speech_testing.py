@@ -34,8 +34,8 @@ def callback(recognizer, audio):
 
 print "MIC-ing"
 m = sr.Microphone(
-	device_index=2, 
-	sample_rate=48000, 
+	# device_index=2, 
+	sample_rate=44100, 
 	chunk_size = 8192
 	)
 
