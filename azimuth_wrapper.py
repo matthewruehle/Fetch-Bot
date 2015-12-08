@@ -23,44 +23,45 @@ class FetchBot(object):
 			STOP_COMMAND = "S"
 			self.ser.write(STOP_COMMAND)
 			return
-		qr_val = ""
-		qr_val = self.qrd.scan()
-		if str(qr_val) == str(self.target_queue[0]):
-			t = self.target_queue[0]
-			print "arrived at ", t, "|\t", self.target_queue
-			if t in ["1", "2", "3"]:
-				if self.hasObject:
-					DROP_COMMAND = "D" # TODO ofc.
-					self.ser.write(DROP_COMMAND)
-					self.hasObject = False
-					time.sleep(1)
-					TURN_COMMAND = "<"
-					self.ser.write(TURN_COMMAND)
-					time.sleep(1)
-			elif t in ["salt", "pepper"]:
-				if not self.hasObject:
-					TURN_COMMAND = "<"
-					self.ser.write(TURN_COMMAND)
-					time.sleep(1)
-					FWD_COMMAND = "F"
-					self.ser.write(FWD_COMMAND)
-					time.sleep(2)
-					GRAB_COMMAND = "G"
-					self.ser.write(GRAB_COMMAND)
-					time.sleep(1) # lets it finish
-					self.hasObject = True
-					TURN_COMMAND = "<"
-					self.ser.write(TURN_COMMAND)
-					time.sleep(1)
-					self.ser.write(FWD_COMMAND)
-					time.sleep(2)
-					self.ser.write(TURN_COMMAND)
-					time.sleep(1)
-			FWD_COMMAND = "F"
-			self.ser.write(FWD_COMMAND)
-			self.target_queue.pop(0)
 		else:
-			self.ser.write("F")
+			qr_val = ""
+			qr_val = self.qrd.scan()
+			if str(qr_val) == str(self.target_queue[0]):
+				t = self.target_queue[0]
+				print "arrived at ", t, "|\t", self.target_queue
+				if t in ["1", "2", "3"]:
+					if self.hasObject:
+						DROP_COMMAND = "D" # TODO ofc.
+						self.ser.write(DROP_COMMAND)
+						self.hasObject = False
+						time.sleep(1)
+						TURN_COMMAND = "<"
+						self.ser.write(TURN_COMMAND)
+						time.sleep(1)
+				elif t in ["salt", "pepper"]:
+					if not self.hasObject:
+						TURN_COMMAND = "<"
+						self.ser.write(TURN_COMMAND)
+						time.sleep(1)
+						FWD_COMMAND = "F"
+						self.ser.write(FWD_COMMAND)
+						time.sleep(2)
+						GRAB_COMMAND = "G"
+						self.ser.write(GRAB_COMMAND)
+						time.sleep(1) # lets it finish
+						self.hasObject = True
+						TURN_COMMAND = "<"
+						self.ser.write(TURN_COMMAND)
+						time.sleep(1)
+						self.ser.write(FWD_COMMAND)
+						time.sleep(2)
+						self.ser.write(TURN_COMMAND)
+						time.sleep(1)
+				FWD_COMMAND = "F"
+				self.ser.write(FWD_COMMAND)
+				self.target_queue.pop(0)
+			else:
+				self.ser.write("F")
 			
 	def run(self):
 		"""
