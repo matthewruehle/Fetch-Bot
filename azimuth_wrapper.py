@@ -37,11 +37,21 @@ class FetchBot(object):
 					time.sleep(1)
 			elif t in ["salt", "pepper"]:
 				if not self.hasObject:
+					TURN_COMMAND = "<"
+					self.ser.write(TURN_COMMAND)
+					time.sleep(1)
+					FWD_COMMAND = "F"
+					self.ser.write(FWD_COMMAND)
+					time.sleep(2)
 					GRAB_COMMAND = "G"
 					self.ser.write(GRAB_COMMAND)
 					time.sleep(1) # lets it finish
 					self.hasObject = True
 					TURN_COMMAND = "<"
+					self.ser.write(TURN_COMMAND)
+					time.sleep(1)
+					self.ser.write(FWD_COMMAND)
+					time.sleep(2)
 					self.ser.write(TURN_COMMAND)
 					time.sleep(1)
 			FWD_COMMAND = "F"
