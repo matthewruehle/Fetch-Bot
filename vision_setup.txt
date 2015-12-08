@@ -1,4 +1,4 @@
-[0. If the traditional apt-get upgrade, update, etc. methods hang, it's likely because of an issue contacting the mirror server for Raspbian. Manually changing the sources in /etc/apt/sources.list from mirror-directory.raspbian.org (or w/e) to a specific mirror will make downloads slow, but they'll work.]
+[0. If the traditional apt-get upgrade, update, etc. methods hang, it's likely because of an issue contacting the mirror server for Raspbian. Manually changing the sources in /etc/apt/sources.list from mirror-directory.raspbian.org (or w/e) to a specific mirror will make downloads slow, but they'll work.] [Thanks, raspbian.mirrors.wvstateu.edu/raspbian/]
 $ cd /etc/apt
 $ nano sources.list
 [make changes]
@@ -13,6 +13,7 @@ $ pip install "picamera[array]"
 
 2. Install openCV (in a workspace), per instructions at:
 http://www.pyimagesearch.com/2015/10/26/how-to-install-opencv-3-on-raspbian-jessie/
+	--NOTE: Current version actually doesn't use openCV. CV might be handy for extensions, but we could skip this in the current version.
 
 3. Install zbar, and the zbarlight python wrapper:
 $ sudo apt-get install libzbar0 libzbar-dev
