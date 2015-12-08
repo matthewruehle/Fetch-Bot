@@ -5,6 +5,7 @@ import serial
 import qr_detector
 import speech_handler #needs to be set up correctly
 import threading
+import time
 
 class FetchBot(object):
 
