@@ -64,7 +64,7 @@ class FetchBot(object):
 
 	def set_target(self, new_targets):
 		for i in new_targets:
-			i = str(i)
+			i = str(i).lower()
 			if i in self.words_to_targets_dict.keys():
 				self.target_queue.append(self.words_to_targets_dict[i])
 				print "Added target: ", i
@@ -80,6 +80,10 @@ class FetchBot(object):
 if __name__ == "__main__":
 	fb = FetchBot()
 	fb.sr.loop()
+	i = 0
 	while True:
+		i += 1
 		fb.mainloop()
+		if i%10000 == 0:
+			print "mainloop running."
 
