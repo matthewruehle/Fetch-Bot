@@ -63,9 +63,11 @@ class Loop_speech_handler(object):
 		try: 
 			this_string = self.r.recognize_google(audio)
 		except sr.UnknownValueError:
-			this_string = "Couldn't understand that!"
+			print "Couldn't understand that..."
+			return
 		except sr.RequestError:
 			print "Couldn't request results..."
+			return
 		word_list = this_string.split(' ')
 		self.cb(word_list)
 		return
