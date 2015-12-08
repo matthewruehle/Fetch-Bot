@@ -108,7 +108,7 @@ class FetchBot(object):
 			#Maybe find some way to pre-emptively "save" the audio? Not sure if that's possible.
 			#Also, not sure if it's the microphone that's having the problem. Might be the recognizer, or something else.
 			#Googling the error code just gets unrelated IOErrors. Googling it in quotes gets 4 results, none resolved. :|
-
+			self.listen_loop()
 
 if __name__ == "__main__":
 	fb = FetchBot()
