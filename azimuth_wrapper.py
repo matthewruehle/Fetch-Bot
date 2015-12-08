@@ -79,7 +79,7 @@ class FetchBot(object):
 
 if __name__ == "__main__":
 	fb = FetchBot()
-	self.sr.loop()
+	fb.sr.loop()
 	while True:
 		fb.mainloop()
 
