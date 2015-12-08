@@ -109,7 +109,7 @@ if __name__ == "__main__":
 	run_thread = threading.Thread(target=fb.run_loop)
 	listen_thread = threading.Thread(target=fb.listen_loop)
 	run_thread.start()
-	rumble_thread.start()
+	listen_thread.start()
 	try:
 		while True:
 			time.sleep(1)
