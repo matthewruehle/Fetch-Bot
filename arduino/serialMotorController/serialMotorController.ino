@@ -116,7 +116,12 @@ void loop() {
     case 'D': //Drop
       drop();
       break;
-        
+    
+    case 'B': //Back
+      backup();
+      break;
+      
+    
     default:
       //change nothing
       if (unknownCommandFlag) {
@@ -193,6 +198,28 @@ void drop() {
   //delay(1000);
   //claw_servo.write(90);
   command = 'S';
+}
+
+void backup() {
+  left_sensor = analogRead(LEFT_SENSOR_PIN);
+  right_sensor = analogRead(RIGHT_SENSOR_PIN);
+  //Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
+  //Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
+  
+  if (left_sensor > LEFT_SENSOR_THRESH) {
+    //Left sensor is over line
+    //Swerve left until left sensor is not over line
+    drive(-10, -30); //Slow down left wheel to swerve left
+  } else if (right_sensor > RIGHT_SENSOR_THRESH) {
+    //Right sensor is over line
+    //Swerve right until right sensor is not over line
+    drive(-30, -10); //Slow down right wheel to swerve right
+  } else {
+    //No sensors are over line
+    //Drive straight
+    drive(-30, -30);
+  }
+}
 }
 
 void followLine() {
