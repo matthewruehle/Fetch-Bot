@@ -31,11 +31,17 @@ class FetchBot(object):
 				print "arrived at ", t, "|\t", self.target_queue
 				if t in ["1", "2", "3"]:
 					if self.hasObject:
-						DROP_COMMAND = "D" # TODO ofc.
+						RIGHT_COMMAND = ">"
+						DROP_COMMAND = "D"
+						TURN_COMMAND = "<"
+						BACK_COMMAND = "B"
+						self.ser.write(RIGHT_COMMAND)
+						time.sleep(1)
 						self.ser.write(DROP_COMMAND)
 						self.hasObject = False
 						time.sleep(1)
-						TURN_COMMAND = "<"
+						self.ser.write(BACK_COMMAND)
+						time.sleep(0.5)
 						self.ser.write(TURN_COMMAND)
 						time.sleep(1)
 				elif t in ["salt", "pepper"]:
@@ -45,7 +51,7 @@ class FetchBot(object):
 						time.sleep(1)
 						FWD_COMMAND = "F"
 						self.ser.write(FWD_COMMAND)
-						time.sleep(2)
+						time.sleep(1)
 						GRAB_COMMAND = "G"
 						self.ser.write(GRAB_COMMAND)
 						time.sleep(1) # lets it finish
@@ -54,7 +60,7 @@ class FetchBot(object):
 						self.ser.write(TURN_COMMAND)
 						time.sleep(1)
 						self.ser.write(FWD_COMMAND)
-						time.sleep(2)
+						time.sleep(1)
 						self.ser.write(TURN_COMMAND)
 						time.sleep(1)
 				FWD_COMMAND = "F"
