@@ -13,7 +13,7 @@ class FetchBot(object):
 		self.qrd = qr_detector.QRDetector()
 		try:
 			self.ser = serial.Serial(serial_port, 9600, timeout=2)
-		except SerialException:
+		except:
 			self.ser = serial.Serial("/dev/tty/AMA0", 9600, timeout=2)
 		self.target_queue = []
 		# self.target_queue = ["1", "salt", "2", "pepper", "3"] # setting at start, for testing purposes.
