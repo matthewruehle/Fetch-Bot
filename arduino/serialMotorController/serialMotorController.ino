@@ -12,8 +12,8 @@ Adafruit_DCMotor *leftm, *rightm;
 const byte LEFT_MOTOR_PORT = 1;
 const byte RIGHT_MOTOR_PORT = 2;
 const int LEFT_SENSOR_PIN = A5, RIGHT_SENSOR_PIN = A3;
-const int LEFT_SENSOR_THRESH = 970;
-const int RIGHT_SENSOR_THRESH = 900;
+const int LEFT_SENSOR_THRESH = 890;
+const int RIGHT_SENSOR_THRESH = 700;
 const int LEFT_HALL_A_PIN = 1, LEFT_HALL_B_PIN = 2;
 const int RIGHT_HALL_A_PIN = 3, RIGHT_HALL_B_PIN = 4;
 const int MANIPULATOR_SERVO_PIN = 9;
@@ -43,8 +43,8 @@ void setup() {
   rightm -> run(BACKWARD);
   manip_servo.attach(MANIPULATOR_SERVO_PIN);
   claw_servo.attach(CLAW_SERVO_PIN);
-  manip_servo.write(180);
-  claw_servo.write(90);
+  manip_servo.write(98); //actually the front servo that opens and closes claw
+  claw_servo.write(90); //actually the back servo that extends and retracts claw
 }
 
 void loop() {
@@ -95,6 +95,8 @@ void loop() {
       
     case 'S': //Stop
       drive(0, 0);
+      //claw_servo.write(90);
+      manip_servo.write(98);
       break;
       
     case 'F': //Follow Line
@@ -174,38 +176,41 @@ void findLineRight() {
 
 void grab() {
   drive(0, 0);
-  claw_servo.write(70);
+  manip_servo.write(90);
   delay(500);
-  manip_servo.write(40);
-  delay(2000);
-  claw_servo.write(120);
+  claw_servo.write(0);
+  delay(500);
+  manip_servo.write(120);
   delay(800);
   //claw_servo.write(90);
-  manip_servo.write(180);
+  claw_servo.write(180);
   delay(1200);
+  manip_servo.write(100);
   command = 'S';
 }
 
 void drop() {
   drive(0, 0);
-  manip_servo.write(40);
+  claw_servo.write(10);
+  manip_servo.write(100);
   delay(500);
-  claw_servo.write(60);
+  manip_servo.write(80);
   delay(500);
-  manip_servo.write(180);
+  claw_servo.write(90);
   delay(1000);
-  claw_servo.write(100);
-  //delay(1000);
+  manip_servo.write(100);
+  delay(500);
   //claw_servo.write(90);
+  manip_servo.write(98);
   command = 'S';
 }
 
 void backup() {
   left_sensor = analogRead(LEFT_SENSOR_PIN);
   right_sensor = analogRead(RIGHT_SENSOR_PIN);
-  Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
-  Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
-  delay(800);
+  //Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
+  //Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
+  
   if (left_sensor > LEFT_SENSOR_THRESH) {
     //Left sensor is over line
     //Swerve left until left sensor is not over line
@@ -221,12 +226,13 @@ void backup() {
   }
 }
 
+
 void followLine() {
   left_sensor = analogRead(LEFT_SENSOR_PIN);
   right_sensor = analogRead(RIGHT_SENSOR_PIN);
-  Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
-  Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
-  delay(800);
+  //Serial.print("Left Sensor: " + String(left_sensor) +  "\n");
+  //Serial.print("Right Sensor: " + String(right_sensor) +  "\n");
+  
   if (left_sensor > LEFT_SENSOR_THRESH) {
     //Left sensor is over line
     //Swerve left until left sensor is not over line
