@@ -236,11 +236,11 @@ void followLine() {
   if (left_sensor > LEFT_SENSOR_THRESH) {
     //Left sensor is over line
     //Swerve left until left sensor is not over line
-    drive(10, 30); //Slow down left wheel to swerve left
+    drive(5, 50); //Slow down left wheel to swerve left
   } else if (right_sensor > RIGHT_SENSOR_THRESH) {
     //Right sensor is over line
     //Swerve right until right sensor is not over line
-    drive(30, 10); //Slow down right wheel to swerve right
+    drive(50, 5); //Slow down right wheel to swerve right
   } else {
     //No sensors are over line
     //Drive straight
