@@ -95,7 +95,7 @@ class FetchBot(object):
 				import subprocess
 				cmd = "sudo shutdown -H now"
 				popen = subprocess.Popen(cmd, shell=True)
-        		popen.communicate()
+				popen.communicate()
 			else:
 				print "Not recognized target: ", i
 
