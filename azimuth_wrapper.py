@@ -18,7 +18,7 @@ class FetchBot(object):
 		self.target_queue = []
 		self.target_queue = ["1", "salt", "2", "pepper", "3"] # setting at start, for testing purposes.
 		self.hasObject = False
-		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "alt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
+		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
 		self.sr = speech_handler.Loop_speech_handler(self.set_target)
 
 	def check_if_at_target(self):
@@ -84,20 +84,13 @@ class FetchBot(object):
 			if i in self.words_to_targets_dict.keys():
 				self.target_queue.append(self.words_to_targets_dict[i])
 				print "Added target: ", i
-			elif i in ["azimuth", "azmyth"]:
+			elif i == "azimuth":
 				print "Recognized name. Bark, bark!"
 				#this might be a good thing to map to "stop & flush targets"
-			elif i in ["sprint", "print"]:
+			elif i == "print":
 				print self.target_queue
-			elif i in ["here", "clear"]:
-				print "Clearing targets"
+			elif i == "clear":
 				self.flush_targets()
-			elif i == "abort":
-				print "shutting down..."
-				import subprocess
-				cmd = "sudo shutdown -H now"
-				popen = subprocess.Popen(cmd, shell=True)
-				popen.communicate()
 			else:
 				print "Not recognized target: ", i
 
@@ -105,22 +98,19 @@ class FetchBot(object):
 		self.target_queue = []
 
 	def run_loop(self):
-		while True:
-			self.run()
-		# try:
-		# 	while True:
-		# 		self.run()
-		# except KeyboardInterrupt:
-		# 	print "run_loop terminated"
+		try:
+			while True:
+				self.run()
+		except KeyboardInterrupt:
+			print "run_loop terminated"
 
 	def listen_loop(self):
 		try:
 			while True:
 				self.sr.once()
-		# except KeyboardInterrupt:
-			# print "listen_loop terminated"
+		except KeyboardInterrupt:
+			print "listen_loop terminated"
 		except IOError:
-			print "Got ioerror; resetting speech handler."
 			self.sr = speech_handler.Loop_speech_handler(self.set_target)
 			#Not sure if this actually fixes the problem we're getting - persistent, hard-to-figure-out-why IOError keeps showing up occasionally.
 			#Specifically, IOError: stream closed. Refreshing the microphone might reopen the stream?
@@ -138,14 +128,7 @@ if __name__ == "__main__":
 	try:
 		while True:
 			time.sleep(1)
-	except:
-		print "exiting..."
+	except KeyboardInterrupt:
+		time.sleep(1)
+		print "Exiting..."
 		exit()
-
-	# try:
-	# 	while True:
-	# 		time.sleep(1)
-	# except KeyboardInterrupt:
-	# 	time.sleep(1)
-	# 	print "Exiting..."
-	# 	exit()

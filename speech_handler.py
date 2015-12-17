@@ -45,7 +45,7 @@ class Loop_speech_handler(object):
 		self.r = sr.Recognizer()
 		self.m = sr.Microphone(
 			# device_index = 2,
-			sample_rate = 48000, 
+			sample_rate = 44100, 
 			chunk_size = 8192
 			)
 		print "Adjusting for ambient noise..."
