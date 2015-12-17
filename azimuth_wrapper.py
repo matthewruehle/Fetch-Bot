@@ -65,7 +65,7 @@ class FetchBot(object):
 						time.sleep(1)
 						GRAB_COMMAND = "G"
 						self.ser.write(GRAB_COMMAND)
-						PRINT "GRAB"
+						print "GRAB"
 						time.sleep(1) # lets it finish
 						self.hasObject = True
 						TURN_COMMAND = "<"
