@@ -46,7 +46,7 @@ class Loop_speech_handler(object):
 		self.m = sr.Microphone(
 			# device_index = 2,
 			sample_rate = 44100, 
-			chunk_size = 16384
+			chunk_size = 4096
 			)
 		print "Adjusting for ambient noise..."
 		with self.m as source:
@@ -60,7 +60,7 @@ class Loop_speech_handler(object):
 		Runs once, and sends the results to self.azimuth_callback.
 		"""
 		with self.m as source:
-			print "Listening..."
+			# print "Listening..."
 			audio = self.r.listen(source)
 		try: 
 			this_string = self.r.recognize_google(audio)
@@ -82,6 +82,6 @@ class Loop_speech_handler(object):
 		self.m = sr.Microphone(
 			# device_index = 2,
 			sample_rate = 44100, 
-			chunk_size = 8192
+			chunk_size = 4096
 			)
 		print "Microphone lease refreshed."
