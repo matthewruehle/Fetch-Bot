@@ -18,7 +18,7 @@ class FetchBot(object):
 		self.target_queue = []
 		self.target_queue = ["1", "salt", "2", "pepper", "3"] # setting at start, for testing purposes.
 		self.hasObject = False
-		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
+		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "alt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
 		self.sr = speech_handler.Loop_speech_handler(self.set_target)
 
 	def check_if_at_target(self):
@@ -84,14 +84,15 @@ class FetchBot(object):
 			if i in self.words_to_targets_dict.keys():
 				self.target_queue.append(self.words_to_targets_dict[i])
 				print "Added target: ", i
-			elif i == "azimuth":
+			elif i in ["azimuth", "azmyth"]:
 				print "Recognized name. Bark, bark!"
 				#this might be a good thing to map to "stop & flush targets"
-			elif i == "print":
+			elif i in ["sprint", "print"]:
 				print self.target_queue
 			elif i == "clear":
 				self.flush_targets()
 			elif i == "abort":
+				print "shutting down..."
 				import subprocess
 				cmd = "sudo shutdown -H now"
 				popen = subprocess.Popen(cmd, shell=True)
