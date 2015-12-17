@@ -23,7 +23,7 @@ class FetchBot(object):
 
 	def check_if_at_target(self):
 		if len(self.target_queue) == 0:
-			STOP_COMMAND = "S"
+			STOP_COMMAND = bytes("S", 'UTF-8') # bytes(plaintext, 'UTF-8')
 			self.ser.write(STOP_COMMAND)
 			return
 		else:
@@ -34,10 +34,10 @@ class FetchBot(object):
 				print("arrived at ", t, "|\t", self.target_queue)
 				if t in ["1", "2", "3"]:
 					if self.hasObject:
-						RIGHT_COMMAND = ">"
-						DROP_COMMAND = "D"
-						TURN_COMMAND = "<"
-						BACK_COMMAND = "B"
+						RIGHT_COMMAND = bytes(">", 'UTF-8')
+						DROP_COMMAND = bytes("D", 'UTF-8')
+						TURN_COMMAND = bytes("<", 'UTF-8')
+						BACK_COMMAND = bytes("B", 'UTF-8')
 						self.ser.write(RIGHT_COMMAND)
 						time.sleep(1)
 						self.ser.write(DROP_COMMAND)
@@ -49,28 +49,29 @@ class FetchBot(object):
 						time.sleep(1)
 				elif t in ["salt", "pepper"]:
 					if not self.hasObject:
-						TURN_COMMAND = "<"
+						TURN_COMMAND = bytes("<", 'UTF-8')
 						self.ser.write(TURN_COMMAND)
 						time.sleep(1)
-						FWD_COMMAND = "F"
+						FWD_COMMAND = bytes("F", 'UTF-8')
 						self.ser.write(FWD_COMMAND)
 						time.sleep(1)
-						GRAB_COMMAND = "G"
+						GRAB_COMMAND = bytes("G", 'UTF-8')
 						self.ser.write(GRAB_COMMAND)
 						time.sleep(1) # lets it finish
 						self.hasObject = True
-						TURN_COMMAND = "<"
+						TURN_COMMAND = bytes("<", 'UTF-8')
 						self.ser.write(TURN_COMMAND)
 						time.sleep(1)
 						self.ser.write(FWD_COMMAND)
 						time.sleep(1)
 						self.ser.write(TURN_COMMAND)
 						time.sleep(1)
-				FWD_COMMAND = "F"
+				FWD_COMMAND = bytes("F", 'UTF-8')
 				self.ser.write(FWD_COMMAND)
 				self.target_queue.pop(0)
 			else:
-				self.ser.write("F")
+				FWD_COMMAND = bytes("F", 'UTF-8')
+				self.ser.write(FWD_COMMAND)
 			
 	def run(self):
 		"""
