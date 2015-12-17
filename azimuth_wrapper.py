@@ -25,6 +25,8 @@ class FetchBot(object):
 		if len(self.target_queue) == 0:
 			STOP_COMMAND = "S"
 			self.ser.write(STOP_COMMAND)
+			print "TELL MATT TO STOP"
+			time.sleep(1)
 			return
 		else:
 			qr_val = ""
@@ -39,48 +41,51 @@ class FetchBot(object):
 						TURN_COMMAND = "<"
 						BACK_COMMAND = "B"
 						self.ser.write(RIGHT_COMMAND)
-						print "RIGHT"
+						print "TELL MATT TO TURN RIGHT"
 						time.sleep(1)
 						self.ser.write(DROP_COMMAND)
 						print "DROP"
 						self.hasObject = False
 						time.sleep(1)
 						self.ser.write(BACK_COMMAND)
-						print "BACK"
+						print "TELL MATT TO BACK UP"
 						time.sleep(0.5)
 						self.ser.write(TURN_COMMAND)
-						print "TURN"
+						print "TELL MATT TO TURN LEFT"
 						time.sleep(1)
 				elif t in ["salt", "pepper"]:
 					if not self.hasObject:
 						TURN_COMMAND = "<"
 						self.ser.write(TURN_COMMAND)
-						print "TURN"
+						print "TELL MATT TO TURN LEFT"
 						time.sleep(1)
 						FWD_COMMAND = "F"
 						self.ser.write(FWD_COMMAND)
-						print "FORWARD"
+						print "TELL MATT TO GO FORWARD"
 						time.sleep(1)
 						GRAB_COMMAND = "G"
 						self.ser.write(GRAB_COMMAND)
+						PRINT "GRAB"
 						time.sleep(1) # lets it finish
 						self.hasObject = True
 						TURN_COMMAND = "<"
 						self.ser.write(TURN_COMMAND)
-						print "TURN"
+						print "TELL MATT TO TURN LEFT"
 						time.sleep(1)
 						self.ser.write(FWD_COMMAND)
-						print "FORWARD"
+						print "TELL MATT TO GO FORWARD"
 						time.sleep(1)
 						self.ser.write(TURN_COMMAND)
-						print "TURN"
+						print "TELL MATT TO TURN LEFT"
 						time.sleep(1)
-						print "FORWARD"
+						print "TELL MATT TO GO FORWARD"
 				FWD_COMMAND = "F"
 				self.ser.write(FWD_COMMAND)
+				print "TELL MATT TO GO FORWARD"
 				self.target_queue.pop(0)
 			else:
 				self.ser.write("F")
+				print "TELL MATT TO GO FORWARD"
 			
 	def run(self):
 		"""
