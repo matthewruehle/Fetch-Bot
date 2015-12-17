@@ -89,7 +89,8 @@ class FetchBot(object):
 				#this might be a good thing to map to "stop & flush targets"
 			elif i in ["sprint", "print"]:
 				print self.target_queue
-			elif in ["here", "clear"]:
+			elif i in ["here", "clear"]:
+				print "Clearing targets"
 				self.flush_targets()
 			elif i == "abort":
 				print "shutting down..."
@@ -104,18 +105,20 @@ class FetchBot(object):
 		self.target_queue = []
 
 	def run_loop(self):
-		try:
-			while True:
-				self.run()
-		except KeyboardInterrupt:
-			print "run_loop terminated"
+		while True:
+			self.run()
+		# try:
+		# 	while True:
+		# 		self.run()
+		# except KeyboardInterrupt:
+		# 	print "run_loop terminated"
 
 	def listen_loop(self):
 		try:
 			while True:
 				self.sr.once()
-		except KeyboardInterrupt:
-			print "listen_loop terminated"
+		# except KeyboardInterrupt:
+			# print "listen_loop terminated"
 		except IOError:
 			print "Got ioerror; resetting speech handler."
 			self.sr = speech_handler.Loop_speech_handler(self.set_target)
@@ -132,10 +135,13 @@ if __name__ == "__main__":
 	listen_thread = threading.Thread(target=fb.listen_loop)
 	run_thread.start()
 	listen_thread.start()
-	try:
-		while True:
-			time.sleep(1)
-	except KeyboardInterrupt:
+	while True:
 		time.sleep(1)
-		print "Exiting..."
-		exit()
+	
+	# try:
+	# 	while True:
+	# 		time.sleep(1)
+	# except KeyboardInterrupt:
+	# 	time.sleep(1)
+	# 	print "Exiting..."
+	# 	exit()
