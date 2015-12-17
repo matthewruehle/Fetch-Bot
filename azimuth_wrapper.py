@@ -16,7 +16,7 @@ class FetchBot(object):
 		except:
 			self.ser = serial.Serial("/dev/ttyACM0", 9600, timeout=2)
 		self.target_queue = []
-		self.target_queue = ["1", "salt", "2", "pepper", "3"] # setting at start, for testing purposes.
+		# self.target_queue = ["1", "salt", "2", "pepper", "3"] # setting at start, for testing purposes.
 		self.hasObject = False
 		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
 		self.sr = speech_handler.Loop_speech_handler(self.set_target)
@@ -39,21 +39,27 @@ class FetchBot(object):
 						TURN_COMMAND = "<"
 						BACK_COMMAND = "B"
 						self.ser.write(RIGHT_COMMAND)
+						print "RIGHT"
 						time.sleep(1)
 						self.ser.write(DROP_COMMAND)
+						print "DROP"
 						self.hasObject = False
 						time.sleep(1)
 						self.ser.write(BACK_COMMAND)
+						print "BACK"
 						time.sleep(0.5)
 						self.ser.write(TURN_COMMAND)
+						print "TURN"
 						time.sleep(1)
 				elif t in ["salt", "pepper"]:
 					if not self.hasObject:
 						TURN_COMMAND = "<"
 						self.ser.write(TURN_COMMAND)
+						print "TURN"
 						time.sleep(1)
 						FWD_COMMAND = "F"
 						self.ser.write(FWD_COMMAND)
+						print "FORWARD"
 						time.sleep(1)
 						GRAB_COMMAND = "G"
 						self.ser.write(GRAB_COMMAND)
@@ -61,11 +67,15 @@ class FetchBot(object):
 						self.hasObject = True
 						TURN_COMMAND = "<"
 						self.ser.write(TURN_COMMAND)
+						print "TURN"
 						time.sleep(1)
 						self.ser.write(FWD_COMMAND)
+						print "FORWARD"
 						time.sleep(1)
 						self.ser.write(TURN_COMMAND)
+						print "TURN"
 						time.sleep(1)
+						print "FORWARD"
 				FWD_COMMAND = "F"
 				self.ser.write(FWD_COMMAND)
 				self.target_queue.pop(0)
