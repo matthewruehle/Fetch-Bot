@@ -89,7 +89,7 @@ class FetchBot(object):
 				#this might be a good thing to map to "stop & flush targets"
 			elif i in ["sprint", "print"]:
 				print self.target_queue
-			elif i == "clear":
+			elif in ["here", "clear"]:
 				self.flush_targets()
 			elif i == "abort":
 				print "shutting down..."
@@ -117,6 +117,7 @@ class FetchBot(object):
 		except KeyboardInterrupt:
 			print "listen_loop terminated"
 		except IOError:
+			print "Got ioerror; resetting speech handler."
 			self.sr = speech_handler.Loop_speech_handler(self.set_target)
 			#Not sure if this actually fixes the problem we're getting - persistent, hard-to-figure-out-why IOError keeps showing up occasionally.
 			#Specifically, IOError: stream closed. Refreshing the microphone might reopen the stream?
