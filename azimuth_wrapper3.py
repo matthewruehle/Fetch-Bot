@@ -23,6 +23,10 @@ class FetchBot(object):
 		self.hasObject = False
 		self.words_to_targets_dict = {"one": "1", "1": "1", "won": "1", "2":"2", "3":"3", "two": "2", "to": "2", "too": "2", "three": "3", "tree": "3", "salt": "salt", "alt": "salt", "pepper": "pepper", "rapper":"pepper"} # Do we want these strings as the values encoded by the QR codes? Or are we going for coordinates?
 
+		GRAB_COMMAND = bytes("G", 'UTF-8')
+		self.ser.write(GRAB_COMMAND) # no idea
+
+
 	def check_if_at_target(self):
 		if len(self.target_queue) == 0:
 			STOP_COMMAND = bytes("S", 'UTF-8') # bytes(plaintext, 'UTF-8')
