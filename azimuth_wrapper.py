@@ -91,6 +91,11 @@ class FetchBot(object):
 				print self.target_queue
 			elif i == "clear":
 				self.flush_targets()
+			elif i = "abort":
+				import subprocess
+				cmd = "sudo shutdown -H now"
+				popen = subprocess.Popen(cmd, shell=True)
+        		popen.communicate()
 			else:
 				print "Not recognized target: ", i
 
