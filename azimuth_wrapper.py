@@ -91,7 +91,7 @@ class FetchBot(object):
 				print self.target_queue
 			elif i == "clear":
 				self.flush_targets()
-			elif i = "abort":
+			elif i == "abort":
 				import subprocess
 				cmd = "sudo shutdown -H now"
 				popen = subprocess.Popen(cmd, shell=True)
