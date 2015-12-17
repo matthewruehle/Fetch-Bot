@@ -48,9 +48,9 @@ class Loop_speech_handler(object):
 			sample_rate = 44100, 
 			chunk_size = 8192
 			)
-		print "Adjusting for ambient noise..."
-		with self.m as source:
-			self.r.adjust_for_ambient_noise(source)
+		# print "Adjusting for ambient noise..."
+		# with self.m as source:
+		# 	self.r.adjust_for_ambient_noise(source)
 		self.r.pause_threshold = 0.3
 		self.r.non_speaking_duration = 0
 		self.azimuth_callback = callback_function
