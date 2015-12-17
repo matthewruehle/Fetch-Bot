@@ -114,20 +114,21 @@ class FetchBot(object):
 		# 	print "run_loop terminated"
 
 	def listen_loop(self):
-		try:
+		# try:
+		if True:
 			while True:
 				self.sr.once()
 		# except KeyboardInterrupt:
 			# print "listen_loop terminated"
-		except IOError:
-			print "Got ioerror; resetting speech handler."
-			self.sr = speech_handler.Loop_speech_handler(self.set_target)
-			#Not sure if this actually fixes the problem we're getting - persistent, hard-to-figure-out-why IOError keeps showing up occasionally.
-			#Specifically, IOError: stream closed. Refreshing the microphone might reopen the stream?
-			#Maybe find some way to pre-emptively "save" the audio? Not sure if that's possible.
-			#Also, not sure if it's the microphone that's having the problem. Might be the recognizer, or something else.
-			#Googling the error code just gets unrelated IOErrors. Googling it in quotes gets 4 results, none resolved. :|
-			self.listen_loop()
+		# except IOError:
+		# 	print "Got ioerror; resetting speech handler."
+		# 	self.sr = speech_handler.Loop_speech_handler(self.set_target)
+		# 	#Not sure if this actually fixes the problem we're getting - persistent, hard-to-figure-out-why IOError keeps showing up occasionally.
+		# 	#Specifically, IOError: stream closed. Refreshing the microphone might reopen the stream?
+		# 	#Maybe find some way to pre-emptively "save" the audio? Not sure if that's possible.
+		# 	#Also, not sure if it's the microphone that's having the problem. Might be the recognizer, or something else.
+		# 	#Googling the error code just gets unrelated IOErrors. Googling it in quotes gets 4 results, none resolved. :|
+		# 	self.listen_loop()
 
 if __name__ == "__main__":
 	fb = FetchBot()
@@ -137,7 +138,7 @@ if __name__ == "__main__":
 	listen_thread.start()
 	while True:
 		time.sleep(1)
-	
+
 	# try:
 	# 	while True:
 	# 		time.sleep(1)
